@@ -4,12 +4,13 @@ from iebank_api.models import Account
 
 @app.route('/')
 def hello_world():
+    app.logger.debug('Route / called')
     return 'Hello, World!'
 
 @app.route('/skull', methods=['GET'])
 def skull():
+    app.logger.debug('Route /skull GET called')
     text = 'Hi! This is the BACKEND SKULL! 💀 '
-    
     text = text +'<br/>Database URL:' + db.engine.url.database
     if db.engine.url.host:
         text = text +'<br/>Database host:' + db.engine.url.host
@@ -24,6 +25,7 @@ def skull():
 
 @app.route('/accounts', methods=['POST'])
 def create_account():
+    app.logger.debug('Route /accounts POST called')
     name = request.json['name']
     currency = request.json['currency']
     country = request.json['country']
@@ -34,16 +36,19 @@ def create_account():
 
 @app.route('/accounts', methods=['GET'])
 def get_accounts():
+    app.logger.debug('Route /accounts GET')
     accounts = Account.query.all()
     return {'accounts': [format_account(account) for account in accounts]}
 
 @app.route('/accounts/<int:id>', methods=['GET'])
 def get_account(id):
+    app.logger.debug('Route /accounts GET called with id: ' + id)
     account = Account.query.get(id)
     return format_account(account)
 
 @app.route('/accounts/<int:id>', methods=['PUT'])
 def update_account(id):
+    app.logger.debug('Route /accounts PUT called with id: ' + id)
     account = Account.query.get(id)
     account.name = request.json['name']
     db.session.commit()
@@ -51,6 +56,7 @@ def update_account(id):
 
 @app.route('/accounts/<int:id>', methods=['DELETE'])
 def delete_account(id):
+    app.logger.debug('Route /accounts DELETE called with id: ' + id)
     account = Account.query.get(id)
     db.session.delete(account)
     db.session.commit()
