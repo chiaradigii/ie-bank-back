@@ -12,8 +12,8 @@ permissions:
   id-token: write
 
 env:
-  FRONTEND_WEBAPP_DEV: chiaradigi-fe-dev
-  FRONTEND_WEBAPP_UAT: chiaradigi-fe-uat
+  BACKEND_WEBAPP_DEV: chiaradigi-fe-dev
+  BACKEND_WEBAPP_UAT: chiaradigi-fe-uat
   
 jobs:
   build:
