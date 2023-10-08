@@ -2,7 +2,6 @@ name: ie-bank-backend
 
 on:
   push:
-    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
   workflow_dispatch:
@@ -10,6 +9,9 @@ on:
 permissions:
   contents: read
   id-token: write
+
+env:
+  BACKEND_WEBAPP_DEV: chiaradigi-be-dev
 
 jobs:
   build:
@@ -50,9 +52,6 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: build
-    env:
-      ENV: dev
-      BACKEND_WEBAPP_DEV: chiaradigi-be-dev
     environment:
       name: 'Development'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
@@ -75,32 +74,3 @@ jobs:
         app-name: ${{ env.BACKEND_WEBAPP_DEV }}
         package: .
     
-
-  deploy-uat:
-    runs-on: ubuntu-latest
-    needs: build
-    env:
-      ENV: uat
-      BACKEND_WEBAPP_UAT: chiaradigi-be-uat
-    environment:
-      name: 'User Acceptance Testing'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-
-    steps:
-    - name: Download artifact from build job
-      uses: actions/download-artifact@v2
-      with:
-        name: python-app
-        path: .
-    
-    - uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-    - name: 'Deploy to Azure Web App'
-      uses: azure/webapps-deploy@v2
-      id: deploy-to-webapp
-      with:
-        app-name: ${{ env.BACKEND_WEBAPP_UAT }}
-        package: .
-
