@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from dotenv import load_dotenv
 import os
+from applicationinsights.flask.ext import AppInsights
 
 app = Flask(__name__)
 
@@ -34,4 +35,12 @@ with app.app_context():
 CORS(app)
 
 from iebank_api import routes
+
+#initializing app insights and flushing after each request  in dev mode
+if(os.getenv('ENV')== 'dev'):
+    appinsghts = AppInsights(app)
+    @app.after_request
+    def after_request(response):
+        appinsghts.flush()
+        return response
 
