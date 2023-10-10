@@ -18,7 +18,7 @@ elif os.getenv('ENV') == 'dev':
 elif os.getenv('ENV') == 'ghci':
     print("Running in github mode")
     app.config.from_object('config.GithubCIConfig')
-elif os.getenv('UAT') == 'uat' or os.getenv('UAT') == 'prod':
+elif os.getenv('ENV') == 'uat' or os.getenv('ENV') == 'prod':
     print("Running in UAT mode")
     app.config.from_object('config.UATConfig')
 else:
