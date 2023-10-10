@@ -42,15 +42,9 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       run: |
-
-      # Run unit tests
-      python -m pytest tests/unit -v
-
-      # Run functional tests
-      python -m pytest tests/functional -v
-
-      # Generate coverage report
-      python -m pytest --cov=iebank_api --cov-report=xml:coverage.xml
+        python -m pytest tests/unit -v
+        python -m pytest tests/functional -v
+        python -m pytest --cov=iebank_api --cov-report=xml:coverage.xml
     - name: Upload artifact for deployment jobs
       uses: actions/upload-artifact@v2
       with:
