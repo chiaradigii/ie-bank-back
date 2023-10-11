@@ -34,4 +34,4 @@ class UATConfig(Config):
     dbhost=os.getenv('DBHOST'),
     dbname=os.getenv('DBNAME')
     )
-    DEBUG = True
+    DEBUG = False
