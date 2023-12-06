@@ -27,9 +27,11 @@ def skull():
 def create_account():
     app.logger.debug('Route /accounts POST called')
     name = request.json['name']
+    password = request.json['password']
     currency = request.json['currency']
+    balance = request.json['balance']
     country = request.json['country']
-    account = Account(name, currency, country)
+    account = Account(name, password, currency, balance, country)
     db.session.add(account)
     db.session.commit()
     return format_account(account)
@@ -50,9 +52,18 @@ def get_account(id):
 def update_account(id):
     app.logger.debug('Route /accounts/<int:id> PUT called')
     account = Account.query.get(id)
-    account.name = request.json['name']
+    account.balance = request.json['balance']
     db.session.commit()
     return format_account(account)
+
+
+# @app.route('/accounts/<int:id>', methods=['PUT'])
+# def update_account(id):
+#     app.logger.debug('Route /accounts/<int:id> PUT called')
+#     account = Account.query.get(id)
+#     account.name = request.json['name']
+#     db.session.commit()
+#     return format_account(account)
 
 @app.route('/accounts/<int:id>', methods=['DELETE'])
 def delete_account(id):
@@ -66,6 +77,7 @@ def format_account(account):
     return {
         'id': account.id,
         'name': account.name,
+        'password': account.password,
         'account_number': account.account_number,
         'balance': account.balance,
         'currency': account.currency,
