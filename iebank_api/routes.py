@@ -52,9 +52,18 @@ def get_account(id):
 def update_account(id):
     app.logger.debug('Route /accounts/<int:id> PUT called')
     account = Account.query.get(id)
-    account.name = request.json['name']
+    account.balance = request.json['balance']
     db.session.commit()
     return format_account(account)
+
+
+# @app.route('/accounts/<int:id>', methods=['PUT'])
+# def update_account(id):
+#     app.logger.debug('Route /accounts/<int:id> PUT called')
+#     account = Account.query.get(id)
+#     account.name = request.json['name']
+#     db.session.commit()
+#     return format_account(account)
 
 @app.route('/accounts/<int:id>', methods=['DELETE'])
 def delete_account(id):
