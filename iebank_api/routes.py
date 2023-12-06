@@ -29,8 +29,9 @@ def create_account():
     name = request.json['name']
     password = request.json['password']
     currency = request.json['currency']
+    balance = request.json['balance']
     country = request.json['country']
-    account = Account(name, password, currency, country)
+    account = Account(name, password, currency, balance, country)
     db.session.add(account)
     db.session.commit()
     return format_account(account)

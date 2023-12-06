@@ -17,11 +17,11 @@ class Account(db.Model):
     def __repr__(self):
         return '<Event %r>' % self.account_number
 
-    def __init__(self, name, password, currency, country):
+    def __init__(self, name, password, currency, balance, country):
         self.name = name
         self.password = password
         self.account_number = ''.join(random.choices(string.digits, k=20))
         self.currency = currency
-        self.balance = 0.0
+        self.balance = balance
         self.status = "Active"
         self.country = country
