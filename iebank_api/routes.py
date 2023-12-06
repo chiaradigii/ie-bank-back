@@ -31,12 +31,14 @@ def create_account():
     currency = request.json['currency']
     balance = request.json['balance']
     country = request.json['country']
-    account = Account(name, password, currency, balance, country)
+    transactions = request.json['transactions']
+    main_account = request.json['main_account']
+    account = Account(name, password, currency, balance, country, transactions, main_account)
     db.session.add(account)
     db.session.commit()
     return format_account(account)
 
-@app.route('/accounts', methods=['GET'])
+@app.route('/accounts', methods=['GET']) 
 def get_accounts():
     app.logger.debug('Route /accounts GET called')
     accounts = Account.query.all()
@@ -52,7 +54,8 @@ def get_account(id):
 def update_account(id):
     app.logger.debug('Route /accounts/<int:id> PUT called')
     account = Account.query.get(id)
-    account.balance = request.json['balance']
+    app.logger.debug(request.json)
+    account.balance, account.transactions= request.json['balance'], request.json['transactions']
     db.session.commit()
     return format_account(account)
 
@@ -84,4 +87,6 @@ def format_account(account):
         'status': account.status,
         'country': account.country,
         'created_at': account.created_at, 
+        'transactions': account.transactions,
+        'main_account': account.main_account
     }
