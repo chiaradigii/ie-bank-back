@@ -60,6 +60,24 @@ def update_account(id):
     return format_account(account)
 
 
+@app.route('/accounts/<int:id>/country', methods=['PUT'])
+def admin_update_account(id):
+    app.logger.debug('Route /accounts/<int:id> PUT called')
+    account = Account.query.get(id)
+    app.logger.debug(request.json)
+    account.country = request.json['country']
+    db.session.commit()
+    return format_account(account)
+
+@app.route('/accounts/<int:id>/currency', methods=['PUT'])
+def admin_update_account_curr(id):
+    app.logger.debug('Route /accounts/<int:id> PUT called')
+    account = Account.query.get(id)
+    app.logger.debug(request.json)
+    account.currency = request.json['currency']
+    db.session.commit()
+    return format_account(account)
+
 # @app.route('/accounts/<int:id>', methods=['PUT'])
 # def update_account(id):
 #     app.logger.debug('Route /accounts/<int:id> PUT called')
