@@ -10,9 +10,9 @@ def test_create_account():
     account = Account('John Doe', 'jujuju', 200, '$', 'papua neuva guinea', '37986437677657530547 77589212239432817621 1000 ,', False)
     assert account.name == 'John Doe'
     assert account.password == 'jujuju'
-    assert account.currency == '$'
     assert account.account_number != None
     assert account.balance == 200
+    assert account.currency == '$'
     assert account.status == 'Active'
     assert account.country == 'Argentina'
     assert account.transactions == '37986437677657530547 77589212239432817621 1000 ,'
