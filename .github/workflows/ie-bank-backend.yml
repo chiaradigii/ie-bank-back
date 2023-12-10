@@ -15,7 +15,8 @@ env:
   BACKEND_WEBAPP_UAT: chiaradigi-be-uat
   source_branch_name: ${{ github.ref }}
   pr_target_branch_name: ${{ github.base_ref }}
-  
+  CHANNEL_ID: 'C066QRSD15E'
+
 jobs:
   build:
     
@@ -84,6 +85,15 @@ jobs:
       with:
         app-name: ${{ env.BACKEND_WEBAPP_DEV }}
         package: .
+    
+    - name: Post deployment status to Slack
+      id: slack-notification
+      uses: slackapi/slack-github-action@v1.24.0
+      with:
+        channel-id: env.CHANNEL_ID
+        slack-message: "Deployment to DEV completed: ${{ job.status }}"
+      env:
+        SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
 
   deploy-uat:
     runs-on: ubuntu-latest
@@ -111,3 +121,11 @@ jobs:
         app-name: ${{ env.BACKEND_WEBAPP_UAT }}
         package: .
     
+    - name: Post deployment status to Slack
+      id: slack-notification
+      uses: slackapi/slack-github-action@v1.24.0
+      with:
+        channel-id: env.CHANNEL_ID
+        slack-message: "Deployment to UAT completed: ${{ job.status }}"
+      env:
+        SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}

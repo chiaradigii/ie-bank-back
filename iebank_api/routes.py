@@ -27,14 +27,18 @@ def skull():
 def create_account():
     app.logger.debug('Route /accounts POST called')
     name = request.json['name']
+    password = request.json['password']
     currency = request.json['currency']
+    balance = request.json['balance']
     country = request.json['country']
-    account = Account(name, currency, country)
+    transactions = request.json['transactions']
+    main_account = request.json['main_account']
+    account = Account(name, password, currency, balance, country, transactions, main_account)
     db.session.add(account)
     db.session.commit()
     return format_account(account)
 
-@app.route('/accounts', methods=['GET'])
+@app.route('/accounts', methods=['GET']) 
 def get_accounts():
     app.logger.debug('Route /accounts GET called')
     accounts = Account.query.all()
@@ -50,9 +54,37 @@ def get_account(id):
 def update_account(id):
     app.logger.debug('Route /accounts/<int:id> PUT called')
     account = Account.query.get(id)
-    account.name = request.json['name']
+    app.logger.debug(request.json)
+    account.balance, account.transactions= request.json['balance'], request.json['transactions']
     db.session.commit()
     return format_account(account)
+
+
+@app.route('/accounts/<int:id>/country', methods=['PUT'])
+def admin_update_account(id):
+    app.logger.debug('Route /accounts/<int:id> PUT called')
+    account = Account.query.get(id)
+    app.logger.debug(request.json)
+    account.country = request.json['country']
+    db.session.commit()
+    return format_account(account)
+
+@app.route('/accounts/<int:id>/currency', methods=['PUT'])
+def admin_update_account_curr(id):
+    app.logger.debug('Route /accounts/<int:id> PUT called')
+    account = Account.query.get(id)
+    app.logger.debug(request.json)
+    account.currency = request.json['currency']
+    db.session.commit()
+    return format_account(account)
+
+# @app.route('/accounts/<int:id>', methods=['PUT'])
+# def update_account(id):
+#     app.logger.debug('Route /accounts/<int:id> PUT called')
+#     account = Account.query.get(id)
+#     account.name = request.json['name']
+#     db.session.commit()
+#     return format_account(account)
 
 @app.route('/accounts/<int:id>', methods=['DELETE'])
 def delete_account(id):
@@ -66,10 +98,13 @@ def format_account(account):
     return {
         'id': account.id,
         'name': account.name,
+        'password': account.password,
         'account_number': account.account_number,
         'balance': account.balance,
         'currency': account.currency,
         'status': account.status,
         'country': account.country,
         'created_at': account.created_at, 
+        'transactions': account.transactions,
+        'main_account': account.main_account
     }
