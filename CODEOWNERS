@@ -1,0 +1,24 @@
+# Product Owner (Chiara): Oversees product development, vision, and stakeholder collaboration. Responsible for ensuring value delivery to customers and the business.
+/docs/ @chiaradigii
+/README.md @chiaradigii
+
+# Cloud Architect (Bea): Designs and implements cloud solutions, ensuring scalability, reliability, and cost-effectiveness. Proficient in cloud computing principles, architecture, and security.
+/cloud-solutions/ @beaamoo
+/cloud-architecture/ @beaamoo
+
+# Cloud Full Stack Developer (Adnan): Skilled in front-end and back-end development within cloud environments. Implements cloud applications adhering to best practices in cloud computing and security.
+/frontend/ @adnanbhanji
+/backend/ @adnanbhanji
+/cloud-services/ @adnanbhanji
+
+# Cloud Infrastructure Developer (Khaled and Hussein): Specializes in designing cloud infrastructure using IaC for speed, consistency, scalability, and security.
+/infrastructure/ @KhaledAkel @HusseinnSolimann
+/IaC/ @KhaledAkel @HusseinnSolimann
+
+# Cloud Security Developer (Liubey): Focuses on designing and implementing cloud security solutions. Expert in cloud cybersecurity, ensuring the protection of data and assets across various cloud platforms.
+/security/ @Liubey135
+/cloud-security/ @Liubey135
+
+# Site Reliability Engineer (Tatos): Applies software engineering to IT operations, enhancing software services' reliability, efficiency, and scalability. Manages monitoring, troubleshooting, and system automation.
+/operations/ @tatosf
+/monitoring/ @tatosf
